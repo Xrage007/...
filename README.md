@@ -123,3 +123,20 @@ int main()
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//This is an attempt to write a modified QuickSort algorithm where the worst case is O(n log n) instead of O(n^2). I have used the median of medians algorithm to insure the O(n log n) complexity, but i am having major issues. At line 82-83, the left and right indices are correct at the first recursive call (left = 0, right = 9), but at the second iteration right is for some reason 478 and I cant figure out where exactly it is changing and why. 
