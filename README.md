@@ -11,66 +11,66 @@ void swap(int *a, int *b)
     *b = temp;
 }
 
-int partition(int arr[], int left, int right, int x)
+int partition(int A[], int left, int right, int x)
 {
     int i;
     for (i = left; i < right; i++)
 
-        if (arr[i] == x)
+        if (A[i] == x)
 
             break;
 
-    swap(&arr[i], &arr[right]);
+    swap(&A[i], &A[right]);
     i = left;
     for (int j = left; j <= right - 1; j++)
     {
-        if (arr[j] <= x)
+        if (A[j] <= x)
         {
-            swap(&arr[i], &arr[j]);
+            swap(&A[i], &A[j]);
             i++;
         }
     }
 
-    swap(&arr[i], &arr[right]);
+    swap(&A[i], &A[right]);
 
     return i;
 }
 
-int findMedian(int arr[], int n)
+int findMedian(int A[], int size)
 {
 
-    sort(arr, arr + n);
+    sort(A, A + size);
 
-    return arr[n / 2];
+    return A[size / 2];
 }
 
-int kthSmallest(int arr[], int left, int right, int k)
+int kthSmallest(int A[], int left, int right, int k)
 {
     if (k > 0 && k <= right - left + 1)
     {
-        int n = right - left + 1;
-        int i, median[(n + 4) / 5];
+        int size = right - left + 1;
+        int i, median[(size + 4) / 5];
 
-        for (i = 0; i < n / 5; i++)
+        for (i = 0; i < size / 5; i++)
 
-            median[i] = findMedian(arr + left + i * 5, 5);
+            median[i] = findMedian(A + left + i * 5, 5);
 
-        if (i * 5 < n)
+        if (i * 5 < size)
         {
-            median[i] = findMedian(arr + left + i * 5, n % 5);
+            median[i] = findMedian(A + left + i * 5, size % 5);
             i++;
         }
         int medOfMed = (i == 1) ? median[i - 1] : kthSmallest(median, 0, i - 1, i / 2);
         kthSmallest(median, 0, i - 1, i / 2);
-        int pos = partition(arr, left, right, medOfMed);
+        int pos = partition(A, left, right, medOfMed);
 
         if (pos - left == k - 1)
 
-            return arr[pos];
+            return A[pos];
 
         if (pos - left > k - 1)
-            return kthSmallest(arr, left, pos - 1, k);
-        return kthSmallest(arr, pos + 1, right, k - pos + left - 1);
+            return kthSmallest(A, left, pos - 1, k);
+        return kthSmallest(A, pos + 1, right, k - pos + left - 1);
     }
     return -1;
 }
@@ -92,25 +92,25 @@ void quickSort(int A[], int left, int right, int size)
 
 int main()
 {
-    int n = 10;
-    int A[n];
+    int size = 10;
+    int A[size];
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < size; i++)
     {
         A[i] = (rand() % 1000 + 1);
     }
 
     auto start = std::chrono::high_resolution_clock::now();
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < size; i++)
     {
         cout << A[i] << " ";
     }
     cout << endl;
 
-    quickSort(A, 0, n - 1, n);
+    quickSort(A, 0, size - 1, size);
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < size; i++)
     {
         cout << A[i] << " ";
     }
